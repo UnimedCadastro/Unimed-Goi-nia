@@ -4,144 +4,134 @@
   <meta charset="UTF-8">
   <title>Calculadora Unimed Goiânia - Cadastro</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body {
-      background-color: #f5f5f5;
-    }
-    header {
-      background-color: #008542;
-      color: white;
-      text-align: center;
-      padding: 20px 10px;
-    }
-    .card {
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    footer {
-      background: #008542;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      margin-top: 40px;
-    }
+    body { background-color: #f5f5f5; }
+    header { background-color: #008542; color: white; text-align: center; padding: 20px 10px; }
+    .card { border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    footer { background: #008542; color: white; text-align: center; padding: 15px; margin-top: 40px; }
   </style>
 </head>
 <body>
 
-  <!-- Cabeçalho -->
-  <header>
-    <h1>Calculadora Unimed Goiânia - Cadastro</h1>
-  </header>
+<header>
+  <h1>Calculadora Unimed Goiânia - Cadastro</h1>
+</header>
 
-  <!-- Conteúdo -->
-  <main class="container my-5">
-    <div class="card p-4">
-      <h3 class="mb-4 text-success">Verificações</h3>
+<main class="container my-5">
+  <div class="card p-4">
 
-      <!-- Abas -->
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="dependente-tab" data-bs-toggle="tab" data-bs-target="#dependente" type="button" role="tab">Dependentes (Nascimento / Casamento)</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="carencia-tab" data-bs-toggle="tab" data-bs-target="#carencia" type="button" role="tab">Carência</button>
-        </li>
-      </ul>
+    <!-- Abas -->
+    <ul class="nav nav-tabs" id="tabs">
+      <li class="nav-item">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#abaRecem">Recém-Nascido / Casado</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#abaCarencia">Carências</button>
+      </li>
+    </ul>
 
-      <!-- Conteúdo das abas -->
-      <div class="tab-content mt-3" id="myTabContent">
+    <div class="tab-content mt-4">
 
-        <!-- Aba Dependentes -->
-        <div class="tab-pane fade show active" id="dependente" role="tabpanel">
-          <div class="mb-3">
-            <label for="depInput" class="form-label fw-bold">Data do Evento (Nascimento ou Casamento):</label>
-            <input type="date" id="depInput" class="form-control">
-          </div>
-          <button class="btn btn-success w-100" onclick="calcDependente()">Verificar</button>
-          <div id="resDependente" class="mt-3"></div>
+      <!-- Aba Recém-nascido / Casado -->
+      <div class="tab-pane fade show active" id="abaRecem">
+        <h4 class="mb-3 text-success">Recém-nascido / Recém-casado</h4>
+        <div class="mb-3">
+          <label for="dataRecem" class="form-label fw-bold">Data do Evento:</label>
+          <input type="date" id="dataRecem" class="form-control">
         </div>
-
-        <!-- Aba Carência -->
-        <div class="tab-pane fade" id="carencia" role="tabpanel">
-          <h5 class="text-success">Período de Carência</h5>
-          <div class="mb-3">
-            <label for="carInicio" class="form-label fw-bold">Data Inicial:</label>
-            <input type="date" id="carInicio" class="form-control">
-          </div>
-          <div class="mb-3">
-            <label for="carFim" class="form-label fw-bold">Data Final:</label>
-            <input type="date" id="carFim" class="form-control">
-          </div>
-
-          <div class="mb-3">
-            <label for="diasAdd" class="form-label fw-bold">Adicionar Dias à Data Inicial:</label>
-            <input type="number" id="diasAdd" class="form-control" placeholder="Ex: 180">
-          </div>
-
-          <button class="btn btn-success w-100" onclick="calcCarencia()">Verificar</button>
-          <div id="resCarencia" class="mt-3"></div>
-        </div>
-
+        <button class="btn btn-success w-100" onclick="calcularRecem()">Verificar</button>
+        <div id="resultadoRecem" class="mt-3"></div>
       </div>
+
+      <!-- Aba Carências -->
+      <div class="tab-pane fade" id="abaCarencia">
+        <h4 class="mb-3 text-success">Carências</h4>
+        <div class="mb-3">
+          <label for="migracao" class="form-label fw-bold">Data de Migração:</label>
+          <input type="date" id="migracao" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="dataInicialDias" class="form-label fw-bold">Data Inicial (para adicionar dias):</label>
+          <input type="date" id="dataInicialDias" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="diasAdicionar" class="form-label fw-bold">Adicionar Dias:</label>
+          <input type="number" id="diasAdicionar" class="form-control" placeholder="Ex: 180">
+        </div>
+        <div class="mb-3">
+          <label for="dataInicialMeses" class="form-label fw-bold">Data Inicial (para adicionar meses):</label>
+          <input type="date" id="dataInicialMeses" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="mesesAdicionar" class="form-label fw-bold">Adicionar Meses:</label>
+          <input type="number" id="mesesAdicionar" class="form-control" placeholder="Ex: 6">
+        </div>
+        <button class="btn btn-success w-100" onclick="calcularCarencia()">Verificar</button>
+        <div id="resultadoCarencia" class="mt-3"></div>
+      </div>
+
     </div>
-  </main>
+  </div>
+</main>
 
-  <!-- Rodapé -->
-  <footer>
-    © 2025 Unimed Goiânia - Todos os direitos reservados
-  </footer>
+<footer>
+  © 2025 Unimed Goiânia - Todos os direitos reservados
+</footer>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  function calcularRecem() {
+    const hoje = new Date();
+    const data = new Date(document.getElementById('dataRecem').value);
+    let saida = "";
 
-  <script>
-    function calcDependente() {
-      const hoje = new Date();
-      const evento = new Date(document.getElementById('depInput').value);
-      let res = "";
-
-      if (!isNaN(evento)) {
-        const diffDias = Math.floor((hoje - evento) / (1000*60*60*24));
-        res = diffDias <= 30 ?
-          `<div class="alert alert-success">Dependente (Nascimento/Casamento): OK (${diffDias} dias)</div>` :
-          `<div class="alert alert-danger">Dependente (Nascimento/Casamento): NOK (${diffDias} dias)</div>`;
+    if (!isNaN(data)) {
+      const diffDias = Math.floor((hoje - data) / (1000*60*60*24));
+      if (diffDias <= 30) {
+        saida = `<div class="alert alert-success">OK (${diffDias} dias)</div>`;
+      } else {
+        saida = `<div class="alert alert-danger">NOK (${diffDias} dias)</div>`;
       }
+    }
+    document.getElementById('resultadoRecem').innerHTML = saida;
+  }
 
-      document.getElementById('resDependente').innerHTML = res;
+  function calcularCarencia() {
+    const hoje = new Date();
+    let saida = "";
+
+    // Migração
+    const migracao = new Date(document.getElementById('migracao').value);
+    if (!isNaN(migracao)) {
+      const diffAnos = (hoje - migracao) / (1000*60*60*24*365);
+      if (diffAnos >= 2) {
+        saida += `<div class="alert alert-success">Migração: Carência Cumprida (${diffAnos.toFixed(1)} anos)</div>`;
+      } else {
+        saida += `<div class="alert alert-danger">Migração: Em Carência (${diffAnos.toFixed(1)} anos)</div>`;
+      }
     }
 
-    function calcCarencia() {
-      const inicio = new Date(document.getElementById('carInicio').value);
-      const fim = new Date(document.getElementById('carFim').value);
-      const diasAdd = parseInt(document.getElementById('diasAdd').value);
-      let res = "";
-
-      // Diferença entre datas
-      if (!isNaN(inicio) && !isNaN(fim)) {
-        const diffMs = fim - inicio;
-        const diffDias = Math.floor(diffMs / (1000*60*60*24));
-        const diffAnos = (diffDias / 365).toFixed(1);
-
-        if (diffDias >= 730) {
-          res += `<div class="alert alert-success">Carência: Cumprida (${diffDias} dias / ${diffAnos} anos)</div>`;
-        } else {
-          res += `<div class="alert alert-danger">Carência: Em Cumprimento (${diffDias} dias / ${diffAnos} anos)</div>`;
-        }
-      }
-
-      // Adicionar dias
-      if (!isNaN(inicio) && !isNaN(diasAdd)) {
-        const novaData = new Date(inicio);
-        novaData.setDate(novaData.getDate() + diasAdd);
-        const formatada = novaData.toLocaleDateString("pt-BR", {timeZone: "UTC"});
-        res += `<div class="alert alert-info">Data inicial + ${diasAdd} dias = ${formatada}</div>`;
-      }
-
-      document.getElementById('resCarencia').innerHTML = res;
+    // Adicionar dias
+    const dataDias = new Date(document.getElementById('dataInicialDias').value);
+    const dias = parseInt(document.getElementById('diasAdicionar').value);
+    if (!isNaN(dataDias) && !isNaN(dias)) {
+      let novaData = new Date(dataDias);
+      novaData.setDate(novaData.getDate() + dias);
+      saida += `<div class="alert alert-info">Data + ${dias} dias: ${novaData.toLocaleDateString('pt-BR')}</div>`;
     }
-  </script>
+
+    // Adicionar meses
+    const dataMeses = new Date(document.getElementById('dataInicialMeses').value);
+    const meses = parseInt(document.getElementById('mesesAdicionar').value);
+    if (!isNaN(dataMeses) && !isNaN(meses)) {
+      let novaData = new Date(dataMeses);
+      novaData.setMonth(novaData.getMonth() + meses);
+      saida += `<div class="alert alert-info">Data + ${meses} meses: ${novaData.toLocaleDateString('pt-BR')}</div>`;
+    }
+
+    document.getElementById('resultadoCarencia').innerHTML = saida;
+  }
+</script>
 </body>
 </html>
